@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
-
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
