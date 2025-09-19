@@ -28,8 +28,8 @@ jobs:
         id: auth
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/637928567835/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: 'helloworldserviceacc@deploy-a-nodejsapp.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/637928567835/locations/global/workloadIdentityPools/nodejs-github-pool/providers/github-provider'
+          service_account: 'mynodejssa@testnodejs-472611.iam.gserviceaccount.com'
           project_id: ${{ env.PROJECT_ID }}
 
 
@@ -71,5 +71,6 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --project $PROJECT_ID
+
 
 
