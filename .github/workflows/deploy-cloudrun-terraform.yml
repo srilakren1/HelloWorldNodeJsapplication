@@ -28,10 +28,12 @@ jobs:
       # Step 2: Authenticate to Google Cloud
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
+        id: auth
         with:
-          token_format: access_token
-          workload_identity_provider: "projects/${{ vars.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/${{ vars.GCP_WIP }}/providers/${{ vars.GCP_WIP_PROVIDER }}"
-          service_account: "${{ vars.GCP_SERVICE_ACCOUNT }}"
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/774388061268/locations/global/workloadIdentityPools/gha-gcp/providers/github-provider'
+          service_account: '774388061268-compute@developer.gserviceaccount.com'
+          project_id: ${{ env.PROJECT_ID }}
 
       # Step 3: Setup Terraform
       - name: Set up Terraform
