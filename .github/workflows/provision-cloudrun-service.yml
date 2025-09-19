@@ -28,8 +28,8 @@ jobs:
         id: auth
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/697015359275/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: '697015359275-compute@developer.gserviceaccount.com'
+          workload_identity_provider: 'projects/637928567835/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: '612193168465-compute@developer.gserviceaccount.com'
           project_id: ${{ env.PROJECT_ID }}
 
 
@@ -71,3 +71,4 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --project $PROJECT_ID
+
