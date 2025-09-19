@@ -1,9 +1,19 @@
-data "google_project" "project" {}
-
-# Storage Bucket for source
-resource "google_storage_bucket" "bucket" {
-  name                        = "${data.google_project.project.project_id}-gcf-source"
-  location                    = "US"
-  uniform_bucket_level_access = true
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 4.0"
+    }
+  }
+  required_version = ">= 1.0.0"
 }
 
+provider "google" {
+  project = var.project_id
+  region  = var.region
+}
+
+resource "google_storage_bucket" "example_bucket" {
+  name     = var.bucket_name
+  location = var.region
+}
