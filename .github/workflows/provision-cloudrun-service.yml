@@ -15,8 +15,8 @@ jobs:
     env:
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       REGION: us-central1
-      SERVICE_NAME: my-nodejs-cloudrun-service
-      IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/nodejs-gha-gcpcr/nodejs-app:latest
+      SERVICE_NAME: nodejs-cloudrun-service
+      IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/nodejs-ar/nodejs-app:latest
     
 
     steps:
@@ -28,14 +28,14 @@ jobs:
         id: auth
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/895429411500/locations/global/workloadIdentityPools/nodejs-github-pool/providers/github-provider'
-          service_account: 'mynodejssa@testnodejs-472611.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/774388061268/locations/global/workloadIdentityPools/gha-gcp/providers/github-provider'
+          service_account: '774388061268-compute@developer.gserviceaccount.com'
           project_id: ${{ env.PROJECT_ID }}
 
 
       - name: Create Artifact Registry repository
         run: |
-          gcloud artifacts repositories create nodejs-gha-gcpcr \
+          gcloud artifacts repositories create nodejs-ar \
             --repository-format=docker \
             --location=us-central1 \
             --description="Docker repository for my project" || echo "Repository may already exist"
@@ -71,6 +71,7 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --project $PROJECT_ID
+
 
 
 
