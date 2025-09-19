@@ -1,0 +1,73 @@
+name: Provision Cloud Run Service
+
+on:
+  workflow_dispatch:
+
+
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
+
+jobs:
+  create-cloudrun-service:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      REGION: us-central1
+      SERVICE_NAME: my-nodejs-cloudrun-service
+      IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/nodejs-gha-gcpcr/nodejs-app:latest
+    
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        id: auth
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/697015359275/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: '697015359275-compute@developer.gserviceaccount.com'
+          project_id: ${{ env.PROJECT_ID }}
+
+
+      - name: Create Artifact Registry repository
+        run: |
+          gcloud artifacts repositories create nodejs-gha-gcpcr \
+            --repository-format=docker \
+            --location=us-central1 \
+            --description="Docker repository for my project" || echo "Repository may already exist"
+
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build Docker image
+        run: |
+          docker build -t $IMAGE .
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          registry: 'us-central1-docker.pkg.dev'
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+
+      - name: Push Docker image to Google Container Registry
+        run: |
+          docker push $IMAGE
+      - name: Create Cloud Run Service
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image $IMAGE \
+            --region $REGION \
+            --platform managed \
+            --allow-unauthenticated \
+            --project $PROJECT_ID
