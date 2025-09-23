@@ -2,11 +2,11 @@ steps:
 
 # Step 1: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/cloudrun-deployments/nodejs-gha-gcpcr/nodejs-app:latest', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/just-aloe-246715/nodejs-ar/nodejs-app:latest', '.']
 
   # Step 2: Push the image to Container Registry or Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/cloudrun-deployments/nodejs-gha-gcpcr/nodejs-app:latest']
+    args: ['push', 'us-central1-docker.pkg.dev/just-aloe-246715/nodejs-ar/nodejs-app:latest']
 
   # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -14,11 +14,12 @@ steps:
     args:
       [
         'run', 'deploy', 'my-nodejs-cloudrun-service',
-        '--image', 'us-central1-docker.pkg.dev/cloudrun-deployments/nodejs-gha-gcpcr/nodejs-app:latest',
+        '--image', 'us-central1-docker.pkg.dev/just-aloe-246715/nodejs-ar/nodejs-app:latest',
         '--region', 'us-central1',
         '--platform', 'managed',
         '--allow-unauthenticated'
       ]
 
 images:
-- 'us-central1-docker.pkg.dev/cloudrun-deployments/nodejs-gha-gcpcr/nodejs-app:latest'
+- 'us-central1-docker.pkg.dev/just-aloe-246715/nodejs-ar/nodejs-app:latest'
+
