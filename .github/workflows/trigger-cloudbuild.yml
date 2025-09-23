@@ -15,8 +15,8 @@ jobs:
     env:
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       REGION: us-central1
-      SERVICE_NAME: my-nodejs-cloudrun-service
-      IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/nodejs-gha-gcpcr/nodejs-app:latest
+      SERVICE_NAME: nodejs-cloudrun-service
+      IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/nodejs-ar/nodejs-app:latest
 
     steps:
       - name: Checkout code
@@ -27,8 +27,8 @@ jobs:
         id: auth
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/697015359275/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: '697015359275-compute@developer.gserviceaccount.com'
+          workload_identity_provider: 'projects/774388061268/locations/global/workloadIdentityPools/gha-gcp/providers/github-provider'
+          service_account: '774388061268-compute@developer.gserviceaccount.com'
           project_id: ${{ env.PROJECT_ID }}
 
         
@@ -38,4 +38,5 @@ jobs:
         
             
       
+
 
