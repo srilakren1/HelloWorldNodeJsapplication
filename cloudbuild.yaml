@@ -1,3 +1,7 @@
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+ 
+serviceAccount: projects/just-aloe-246715/serviceAccounts/774388061268-compute@developer.gserviceaccount.com
 steps:
 
 # Step 1: Build the Docker image
@@ -22,4 +26,5 @@ steps:
 
 images:
 - 'us-central1-docker.pkg.dev/just-aloe-246715/nodejs-ar/nodejs-app:latest'
+
 
