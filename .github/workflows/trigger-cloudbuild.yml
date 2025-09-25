@@ -32,11 +32,12 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
 
         
-      - name: Trigger Cloud Build
-        run: |
-          gcloud builds submit --config=cloudbuild.yaml .
+      # - name: Trigger Cloud Build
+      #   # run: |
+      #     gcloud builds submit --config=cloudbuild.yaml .
         
             
       
+
 
 
